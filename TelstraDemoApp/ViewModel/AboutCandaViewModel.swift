@@ -38,6 +38,27 @@ class AboutCandadaViewModel {
   func getDisplayCellViewModel(responceDict: [String: Any]) -> DisplayCellViewModel {
     return DisplayCellViewModel(responceDict: responceDict)
   }
+  
+  ///  function to get viewmodel from local json file for XCTest
+  func readlocalJson() {
+    if let path = Bundle.main.path(forResource: "localJSON", ofType: "json") {
+      do {
+        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+        let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+        if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
+          // do stuff
+          self.navTitle = jsonResult["title"] as? String ?? ""
+          self.displayCellViewModelObj = self.getDisplayCellViewModel(responceDict: jsonResult)
+        }
+      } catch {
+        print("parse error: \(error.localizedDescription)")
+      }
+    }
+    else {
+      print("Invalid filename/path.")
+    }
+  }
+  
 }
 
 ///  This view-model help to display row of tableview

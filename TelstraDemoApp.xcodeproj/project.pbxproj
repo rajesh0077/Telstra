@@ -20,6 +20,7 @@
 		02A1969A245AD93E005DD6D8 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A19699245AD93E005DD6D8 /* AppConstant.swift */; };
 		02A1969D245AE0DB005DD6D8 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1969C245AE0DB005DD6D8 /* ImageTableViewCell.swift */; };
 		02A1969F245AE241005DD6D8 /* Image+DownloadExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1969E245AE241005DD6D8 /* Image+DownloadExtension.swift */; };
+		02A196A5245B25B1005DD6D8 /* localJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 02A196A4245B25B1005DD6D8 /* localJSON.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		02A19699245AD93E005DD6D8 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		02A1969C245AE0DB005DD6D8 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		02A1969E245AE241005DD6D8 /* Image+DownloadExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+DownloadExtension.swift"; sourceTree = "<group>"; };
+		02A196A4245B25B1005DD6D8 /* localJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = localJSON.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				02A19672245ACA3B005DD6D8 /* Assets.xcassets */,
 				02A19674245ACA3B005DD6D8 /* LaunchScreen.storyboard */,
 				02A19677245ACA3B005DD6D8 /* Info.plist */,
+				02A196A4245B25B1005DD6D8 /* localJSON.json */,
 			);
 			path = TelstraDemoApp;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02A196A5245B25B1005DD6D8 /* localJSON.json in Resources */,
 				02A19676245ACA3B005DD6D8 /* LaunchScreen.storyboard in Resources */,
 				02A19673245ACA3B005DD6D8 /* Assets.xcassets in Resources */,
 			);
