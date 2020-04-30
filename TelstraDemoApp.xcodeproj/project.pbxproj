@@ -13,6 +13,11 @@
 		02A19676245ACA3B005DD6D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02A19674245ACA3B005DD6D8 /* LaunchScreen.storyboard */; };
 		02A19681245ACA3B005DD6D8 /* TelstraDemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A19680245ACA3B005DD6D8 /* TelstraDemoAppTests.swift */; };
 		02A1968C245ACAF1005DD6D8 /* LandingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1968B245ACAF1005DD6D8 /* LandingVC.swift */; };
+		02A19691245AD59C005DD6D8 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A19690245AD59C005DD6D8 /* APIHandler.swift */; };
+		02A19694245AD73D005DD6D8 /* RowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A19693245AD73D005DD6D8 /* RowModel.swift */; };
+		02A19696245AD7AA005DD6D8 /* AboutCandaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A19695245AD7AA005DD6D8 /* AboutCandaViewModel.swift */; };
+		02A19698245AD83D005DD6D8 /* String+JSONDecodingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A19697245AD83D005DD6D8 /* String+JSONDecodingExtension.swift */; };
+		02A1969A245AD93E005DD6D8 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A19699245AD93E005DD6D8 /* AppConstant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,11 @@
 		02A19680245ACA3B005DD6D8 /* TelstraDemoAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelstraDemoAppTests.swift; sourceTree = "<group>"; };
 		02A19682245ACA3B005DD6D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02A1968B245ACAF1005DD6D8 /* LandingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingVC.swift; sourceTree = "<group>"; };
+		02A19690245AD59C005DD6D8 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
+		02A19693245AD73D005DD6D8 /* RowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowModel.swift; sourceTree = "<group>"; };
+		02A19695245AD7AA005DD6D8 /* AboutCandaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCandaViewModel.swift; sourceTree = "<group>"; };
+		02A19697245AD83D005DD6D8 /* String+JSONDecodingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+JSONDecodingExtension.swift"; sourceTree = "<group>"; };
+		02A19699245AD93E005DD6D8 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +87,10 @@
 		02A19668245ACA37005DD6D8 /* TelstraDemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				02A1968E245AD38F005DD6D8 /* Model */,
+				02A1968F245AD411005DD6D8 /* ViewModel */,
+				02A1968D245AD383005DD6D8 /* APIHandler */,
+				02A19692245AD6C0005DD6D8 /* Utility */,
 				02A19669245ACA37005DD6D8 /* AppDelegate.swift */,
 				02A1966B245ACA37005DD6D8 /* SceneDelegate.swift */,
 				02A1968B245ACAF1005DD6D8 /* LandingVC.swift */,
@@ -94,6 +108,39 @@
 				02A19682245ACA3B005DD6D8 /* Info.plist */,
 			);
 			path = TelstraDemoAppTests;
+			sourceTree = "<group>";
+		};
+		02A1968D245AD383005DD6D8 /* APIHandler */ = {
+			isa = PBXGroup;
+			children = (
+				02A19690245AD59C005DD6D8 /* APIHandler.swift */,
+			);
+			path = APIHandler;
+			sourceTree = "<group>";
+		};
+		02A1968E245AD38F005DD6D8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				02A19693245AD73D005DD6D8 /* RowModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		02A1968F245AD411005DD6D8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				02A19695245AD7AA005DD6D8 /* AboutCandaViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		02A19692245AD6C0005DD6D8 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				02A19697245AD83D005DD6D8 /* String+JSONDecodingExtension.swift */,
+				02A19699245AD93E005DD6D8 /* AppConstant.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,8 +244,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				02A1968C245ACAF1005DD6D8 /* LandingVC.swift in Sources */,
+				02A19698245AD83D005DD6D8 /* String+JSONDecodingExtension.swift in Sources */,
 				02A1966A245ACA37005DD6D8 /* AppDelegate.swift in Sources */,
 				02A1966C245ACA37005DD6D8 /* SceneDelegate.swift in Sources */,
+				02A19694245AD73D005DD6D8 /* RowModel.swift in Sources */,
+				02A19696245AD7AA005DD6D8 /* AboutCandaViewModel.swift in Sources */,
+				02A19691245AD59C005DD6D8 /* APIHandler.swift in Sources */,
+				02A1969A245AD93E005DD6D8 /* AppConstant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
