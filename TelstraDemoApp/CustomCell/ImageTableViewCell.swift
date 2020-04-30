@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage // used for lazy loading of images
 class ImageTableViewCell: UITableViewCell {
   
   /// private constants
@@ -33,7 +33,11 @@ class ImageTableViewCell: UITableViewCell {
         lblDescription.text = description
       }
       if let href = model.imageHref {
-        imgView.downloaded(from: href)
+        //without using third party framework
+        //imgView.downloaded(from: href)
+        
+        // using third party framework SDWebImage
+        imgView.sd_setImage(with: URL(string: href), placeholderImage: UIImage(named: AppConstant.AppImage.placeholder))
       }
     }
   }
