@@ -7,17 +7,19 @@
 //
 
 struct RowModel {
-    let title:String?
-    let description:String?
-    let imageHref:String?
-    init(){
-        self.title = ""
-        self.description = ""
-        self.imageHref = ""
-    }
-    init(dictionary: [String: AnyObject]) {
-        self.title = dictionary["title"] as? String
-        self.description = dictionary["description"] as? String
-        self.imageHref = dictionary["imageHref"] as? String
-    }
+  let title:String?
+  let description:String?
+  let imageHref:String?
+  
+  init(){
+    self.title = ""
+    self.description = ""
+    self.imageHref = ""
+  }
+  
+  init(dictionary: [String: AnyObject]) {
+    self.title = dictionary["title"] as? String
+    self.description = dictionary["description"] as? String
+    self.imageHref = dictionary["imageHref"] as? String
+  }
 }

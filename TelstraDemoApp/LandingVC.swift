@@ -9,71 +9,172 @@
 import UIKit
 
 class LandingVC: UITableViewController {
-    /// Variables
-    lazy var viewModelObj = {
-        return AboutCandadaViewModel()
-    }()
-    
-    // MARK: - View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        callAPI()
+  /// private constants
+  private struct Constant {
+    static let estimatedRowHeight: CGFloat = 44
+  }
+  
+  var activityIndicator = UIActivityIndicatorView()
+  var noDataFound: Bool?
+  
+  /// Variables
+  lazy var viewModelObj = {
+    return AboutCandadaViewModel()
+  }()
+  
+  // MARK: - View lifecycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    DispatchQueue.main.async {
+      self.initialSetupTableView()
+      self.createActivityIndicator()
+      self.activityIndicator.startAnimating()
+      self.noDataFound = true
+      self.tableView?.reloadData()
     }
-    
-    // MARK: - Table view data source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-    
-    
+    callAPI()
+  }
+  
+  /// Function to set initial Setup of UI
+  func initialSetupTableView() {
+    configureTableView()
+    registerUINibForCell()
+  }
+  
+  /// Function to add activityIndicator
+  func createActivityIndicator() {
+    self.activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+    self.activityIndicator.color = .gray
+    self.activityIndicator.frame = .zero
+    self.activityIndicator.center = self.view.center
+    self.activityIndicator.hidesWhenStopped = true
+    tableView?.addSubview(self.activityIndicator)
+  }
 }
+
+
+/// Utility Methods of UITableView
+extension LandingVC {
+  
+  /// Function to configure TableView
+  func configureTableView() {
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+    tableView?.refreshControl = refreshControl
+    
+    tableView?.dataSource = self
+    tableView?.rowHeight = UITableView.automaticDimension
+    tableView?.estimatedRowHeight = LandingVC.Constant.estimatedRowHeight
+    tableView?.translatesAutoresizingMaskIntoConstraints = false
+    tableView?.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
+    tableView?.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
+    tableView?.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+    tableView?.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+  }
+  
+  /// Function to add Pull to Refresh functionality
+  /// - parameter instance of refreshControl
+  @objc func pullToRefresh(refreshControl: UIRefreshControl) {
+    DispatchQueue.main.async {
+      self.viewModelObj.displayCellViewModelObj?.arrayAboutCanda.removeAll()
+      self.noDataFound = true
+      self.tableView?.reloadData()
+      self.activityIndicator.startAnimating()
+      self.refreshControl?.endRefreshing()
+    }
+    callAPI()
+  }
+  
+  /// Function to  register tableViewCell
+  func registerUINibForCell() {
+    if let tableView = tableView {
+      tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: AppConstant.CellIdentifire.ImageTableViewCellId)
+    }
+  }
+  
+  /// Function to creation cell  and it's configuration
+  /// - parameter indexPath: IndexPath for cell
+  /// - ReturnS: instance of ImageTableViewCell
+  func getImageTableViewCellFor(indexPath: IndexPath) -> ImageTableViewCell? {
+    let cell = tableView?.dequeueReusableCell(withIdentifier: AppConstant.CellIdentifire.ImageTableViewCellId, for: indexPath) as! ImageTableViewCell
+    cell.setUpWith(noDataFound: noDataFound ?? false)
+    self.tableView.separatorStyle = noDataFound ?? false ? .none: .singleLine
+    if noDataFound ?? false {
+      return cell
+    }
+    cell.rowCellModel = viewModelObj.displayCellViewModelObj?.arrayAboutCanda[indexPath.row]
+    return cell
+  }
+}
+
+
 /// Utility Methods of  API
 extension LandingVC {
+  
+  /// Function to fetch API Data
+  func callAPI() {
+    viewModelObj.myLandingVCObj = self
+    viewModelObj.fetchAPIData()
+  }
+  
+  /// API Response Received
+  /// - parameter Bool: is success from
+  /// - parameter AnyObject?:  instance of view model object
+  /// - parameter AnyObject: instance of exception if any
+  func didReceiveApiResponse(isSuccess: Bool, exception: AnyObject?) {
     
-    /// Function to fetch API Data
-    func callAPI() {
-        viewModelObj.myLandingVCObj = self
-        viewModelObj.fetchAPIData()
-    }
-    
-    /// API Response Received
-    /// - parameter Bool: is success from
-    /// - parameter AnyObject?:  instance of view model object
-    /// - parameter AnyObject: instance of exception if any
-    func didReceiveApiResponse(isSuccess: Bool, exception: AnyObject?) {
-        if isSuccess {
-            DispatchQueue.main.async {
-                self.title = self.viewModelObj.navTitle
-                print( self.viewModelObj.displayCellViewModelObj)
-            }
-        } else { // show error dialog
-            self.showAlert(title: AppConstant.LocalizeString.errorTitle,
-                           message : AppConstant.LocalizeString.errorMsg ,
-                           actionTitle : AppConstant.LocalizeString.okBtn)
+    if isSuccess {
+      DispatchQueue.main.async {
+        self.activityIndicator.stopAnimating()
+        self.title = self.viewModelObj.navTitle
+        if self.viewModelObj.displayCellViewModelObj?.arrayAboutCanda.count ?? 0 > 0 {
+          self.noDataFound = false
         }
+        self.tableView.reloadData()
+      }
+    } else { // show error dialog
+      DispatchQueue.main.async {
+        self.activityIndicator.stopAnimating()
+        self.noDataFound = true
+        self.tableView.reloadData()
+        self.showAlert(title: AppConstant.LiteralString.errorTitle,
+                       message : exception?.localizedDescription ?? AppConstant.LiteralString.errorMsg,
+                       actionTitle : AppConstant.LiteralString.okBtn)
+      }
+      
     }
+  }
 }
 
 // MARK: - Helper Methods
 
 extension LandingVC {
-    
-    /// Function to displays alertview controller
-    /// - parameter String: title for alert
-    /// - parameter String: message for alert
-    /// - parameter String: actionbtnTitle for alert
-    func showAlert(title : String , message : String , actionTitle : String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+  
+  /// Function to displays alertview controller
+  /// - parameter String: title for alert
+  /// - parameter String: message for alert
+  /// - parameter String: actionbtnTitle for alert
+  func showAlert(title : String , message : String , actionTitle : String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+}
+
+// MARK: - Table view data source
+
+extension LandingVC {
+  
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if self.noDataFound ?? false {
+      return 1
     }
+    return viewModelObj.displayCellViewModelObj?.arrayAboutCanda.count ?? 0
+  }
+  
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return getImageTableViewCellFor(indexPath: indexPath) ?? UITableViewCell()
+  }
+  
 }
