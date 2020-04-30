@@ -1,0 +1,6 @@
+framework module Pods_TelstraDemoApp {
+  umbrella header "Pods-TelstraDemoApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
