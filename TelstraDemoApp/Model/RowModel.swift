@@ -7,6 +7,7 @@
 //
 
 struct RowModel {
+  
   let title:String?
   let description:String?
   let imageHref:String?
@@ -22,4 +23,5 @@ struct RowModel {
     self.description = dictionary["description"] as? String
     self.imageHref = dictionary["imageHref"] as? String
   }
+  
 }

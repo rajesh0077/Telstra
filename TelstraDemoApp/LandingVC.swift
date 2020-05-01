@@ -9,6 +9,7 @@
 import UIKit
 
 class LandingVC: UITableViewController {
+  
   /// private constants
   private struct Constant {
     static let estimatedRowHeight: CGFloat = 44
@@ -51,6 +52,7 @@ class LandingVC: UITableViewController {
     self.activityIndicator.hidesWhenStopped = true
     tableView?.addSubview(self.activityIndicator)
   }
+  
 }
 
 
@@ -106,6 +108,7 @@ extension LandingVC {
     cell.rowCellModel = viewModelObj.displayCellViewModelObj?.arrayAboutCanda[indexPath.row]
     return cell
   }
+  
 }
 
 
@@ -145,6 +148,7 @@ extension LandingVC {
       
     }
   }
+  
 }
 
 // MARK: - Helper Methods
@@ -160,6 +164,7 @@ extension LandingVC {
     alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
+  
 }
 
 // MARK: - Table view data source

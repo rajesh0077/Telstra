@@ -108,6 +108,7 @@ class ImageTableViewCell: UITableViewCell {
     lblDescription.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
     lblDescription.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
     lblDescription.topAnchor.constraint(equalTo: lblTitle.bottomAnchor, constant: ImageTableViewCell.Constant.verticalSpacing).isActive = true
+    
   }
   
   /// Hide  cell content if no data found

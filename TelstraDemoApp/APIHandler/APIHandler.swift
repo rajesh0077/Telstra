@@ -8,15 +8,18 @@
 
 import Foundation
 class APIHandler {
+  
   static let shared = APIHandler()
   
-  func getImagesWith(urlStr: String, onCompletion: @escaping (Data?, Error?) -> Void) {
-    guard let url = URL.init(string: urlStr) else { return }
+  func callAPI(withURLStr: String, onCompletion: @escaping (Data?, Error?) -> Void) {
+    
+    guard let url = URL.init(string: withURLStr) else { return }
+    
     URLSession.shared.dataTask(with: url) { (data, response, error) in
       if let err = error {
         onCompletion(nil, err)
-        print(err.localizedDescription)
       } else {
+        
         guard let data = data else { return }
         onCompletion(data, nil)
       }

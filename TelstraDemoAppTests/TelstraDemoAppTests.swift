@@ -17,7 +17,7 @@ var viewModelObj = {
 class TelstraDemoAppTests: XCTestCase {
   
   override func setUp() {
-    viewModelObj.readlocalJson()
+    self.readlocalJson()
     XCTAssertEqual(viewModelObj.navTitle, "About Canada")
     XCTAssertTrue(viewModelObj.displayCellViewModelObj?.arrayAboutCanda.count != 0)
     let objectAtFirstIndex = viewModelObj.displayCellViewModelObj?.arrayAboutCanda[0]
@@ -39,6 +39,26 @@ class TelstraDemoAppTests: XCTestCase {
     
     let countofAboutCanda = viewModelObj.displayCellViewModelObj?.arrayAboutCanda.count
     XCTAssertTrue(countofAboutCanda == 14)
+  }
+  
+  ///  function to get viewmodel from local json file for XCTest
+  func readlocalJson() {
+    if let path = Bundle.main.path(forResource: "localJSON", ofType: "json") {
+      do {
+        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+        let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+        if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
+          // do stuff
+          viewModelObj.navTitle = jsonResult["title"] as? String ?? ""
+          viewModelObj.displayCellViewModelObj = viewModelObj.getDisplayCellViewModel(responceDict: jsonResult)
+        }
+      } catch {
+        print("parse error: \(error.localizedDescription)")
+      }
+    }
+    else {
+      print("Invalid filename/path.")
+    }
   }
   
     override func setUpWithError() throws {
