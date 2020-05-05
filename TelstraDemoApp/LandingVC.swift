@@ -100,7 +100,7 @@ extension LandingVC {
 extension LandingVC {
   
   /// Function to fetch API Data
-  @objc func callAPI() {
+   func callAPI() {
     viewModelObj.myLandingVCObj = self
     viewModelObj.fetchAPIData()
   }
