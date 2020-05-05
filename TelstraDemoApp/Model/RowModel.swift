@@ -6,22 +6,17 @@
 //  Copyright © 2020 Rajesh Deshmukh. All rights reserved.
 //
 
-struct RowModel {
+struct DisplayRowModel: Decodable {
   
   let title:String?
   let description:String?
   let imageHref:String?
   
-  init(){
-    self.title = ""
-    self.description = ""
-    self.imageHref = ""
-  }
+}
+
+struct AboutCandaModel: Decodable {
   
-  init(dictionary: [String: AnyObject]) {
-    self.title = dictionary["title"] as? String
-    self.description = dictionary["description"] as? String
-    self.imageHref = dictionary["imageHref"] as? String
-  }
+  let title: String?
+  let rows: [DisplayRowModel]
   
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -180,7 +180,6 @@
 				5602BE1ADC85A03E7E9CF1BF /* Pods-TelstraDemoAppTests.debug.xcconfig */,
 				A2B3BEB30CF75F913DC815DD /* Pods-TelstraDemoAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

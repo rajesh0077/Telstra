@@ -23,7 +23,7 @@ class ImageTableViewCell: UITableViewCell {
   }
   
   /// used computated property to set displayCellViewModel data in tableview cell
-  var rowCellModel: RowModel? {
+  var rowCellModel: DisplayRowModel? {
     didSet {
       guard let model = rowCellModel else {return}
       if let title = model.title {
@@ -133,5 +133,3 @@ class ImageTableViewCell: UITableViewCell {
   }
   
 }
-
-

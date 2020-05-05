@@ -15,49 +15,34 @@ class LandingVC: UITableViewController {
     static let estimatedRowHeight: CGFloat = 44
   }
   
-  var activityIndicator = UIActivityIndicatorView()
   var noDataFound: Bool?
   
   /// Variables
   lazy var viewModelObj = {
-    return AboutCandadaViewModel()
+    return AboutCandaViewModel()
   }()
   
   // MARK: - View lifecycle
-  
   override func viewDidLoad() {
     super.viewDidLoad()
-    DispatchQueue.main.async {
-      self.initialSetupTableView()
-      self.createActivityIndicator()
-      self.activityIndicator.startAnimating()
-      self.noDataFound = true
-      self.tableView?.reloadData()
-    }
+    initialTableViewSetup()
     callAPI()
-  }
-  
-  /// Function to set initial Setup of UI
-  func initialSetupTableView() {
-    configureTableView()
-    registerUINibForCell()
-  }
-  
-  /// Function to add activityIndicator
-  func createActivityIndicator() {
-    self.activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
-    self.activityIndicator.color = .gray
-    self.activityIndicator.frame = .zero
-    self.activityIndicator.center = self.view.center
-    self.activityIndicator.hidesWhenStopped = true
-    tableView?.addSubview(self.activityIndicator)
   }
   
 }
 
-
 /// Utility Methods of UITableView
 extension LandingVC {
+  
+  /// Function to set initial Setup of UI
+  func initialTableViewSetup() {
+    DispatchQueue.main.async {
+      self.registerUINibForCell()
+      self.configureTableView()
+      self.noDataFound = true
+      self.tableView?.reloadData()
+    }
+  }
   
   /// Function to configure TableView
   func configureTableView() {
@@ -79,10 +64,9 @@ extension LandingVC {
   /// - parameter instance of refreshControl
   @objc func pullToRefresh(refreshControl: UIRefreshControl) {
     DispatchQueue.main.async {
-      self.viewModelObj.displayCellViewModelObj?.arrayAboutCanda.removeAll()
+      self.viewModelObj.displayAboutCanda?.removeAll()
       self.noDataFound = true
       self.tableView?.reloadData()
-      self.activityIndicator.startAnimating()
       self.refreshControl?.endRefreshing()
     }
     callAPI()
@@ -105,7 +89,7 @@ extension LandingVC {
     if noDataFound ?? false {
       return cell
     }
-    cell.rowCellModel = viewModelObj.displayCellViewModelObj?.arrayAboutCanda[indexPath.row]
+    cell.rowCellModel = viewModelObj.displayAboutCanda?[indexPath.row]
     return cell
   }
   
@@ -116,7 +100,7 @@ extension LandingVC {
 extension LandingVC {
   
   /// Function to fetch API Data
-  func callAPI() {
+  @objc func callAPI() {
     viewModelObj.myLandingVCObj = self
     viewModelObj.fetchAPIData()
   }
@@ -129,16 +113,14 @@ extension LandingVC {
     
     if isSuccess {
       DispatchQueue.main.async {
-        self.activityIndicator.stopAnimating()
         self.title = self.viewModelObj.navTitle
-        if self.viewModelObj.displayCellViewModelObj?.arrayAboutCanda.count ?? 0 > 0 {
+        if self.viewModelObj.displayAboutCanda?.count ?? 0 > 0 {
           self.noDataFound = false
+          self.tableView.reloadData()
         }
-        self.tableView.reloadData()
       }
     } else { // show error dialog
       DispatchQueue.main.async {
-        self.activityIndicator.stopAnimating()
         self.noDataFound = true
         self.tableView.reloadData()
         self.showAlert(title: AppConstant.LiteralString.errorTitle,
@@ -175,7 +157,7 @@ extension LandingVC {
     if self.noDataFound ?? false {
       return 1
     }
-    return viewModelObj.displayCellViewModelObj?.arrayAboutCanda.count ?? 0
+    return viewModelObj.displayAboutCanda?.count ?? 0
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

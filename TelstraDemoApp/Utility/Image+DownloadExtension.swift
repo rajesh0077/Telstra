@@ -30,7 +30,7 @@ extension UIImageView {
     if let url = URL(string: imageServerUrl) {
       
       URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
-       
+        
         if error != nil {
           DispatchQueue.main.async {
             self.image = defaultImage

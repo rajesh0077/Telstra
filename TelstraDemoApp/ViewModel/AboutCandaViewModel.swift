@@ -7,10 +7,10 @@
 //
 
 import Foundation
-class AboutCandadaViewModel {
+class AboutCandaViewModel {
   
   weak var myLandingVCObj: LandingVC?
-  var displayCellViewModelObj: DisplayCellViewModel?
+  var displayAboutCanda: [DisplayRowModel]?
   var navTitle: String?
   
   ///  function to fetch API Data by given URL
@@ -26,41 +26,21 @@ class AboutCandadaViewModel {
         }
         
         let jsonStr = String(decoding: data, as: UTF8.self)
-        if  let jsonDictionaryData = jsonStr.parseJSONString as? [String: Any] {
+        do {
           
-          /// navTitle: navTitle which is used to display as navigation title
-          self.navTitle = jsonDictionaryData["title"] as? String ?? ""
-          
-          /// displayCellViewModelObj: displayCellViewModelObj contains varible i.e arrayAboutCanda which is used to display tableview rows
-          self.displayCellViewModelObj  = self.getDisplayCellViewModel(responceDict: jsonDictionaryData)
+          let results = try JSONDecoder().decode(AboutCandaModel.self, from: jsonStr.data(using: .utf8)!)
+          self.navTitle = results.title
+          self.displayAboutCanda  = results.rows
           
           self.myLandingVCObj?.didReceiveApiResponse(isSuccess: true, exception: error as AnyObject?)
+          
+        } catch {
+          print(error.localizedDescription)
+          self.myLandingVCObj?.didReceiveApiResponse(isSuccess: false, exception: error as AnyObject?)
         }
+        
       }
     })
   }
   
-  ///  function to get viewmodel
-  /// - parameter [String: Any]: instance of responce Dictionary
-  /// - Returns: instance of viewModel object
-  func getDisplayCellViewModel(responceDict: [String: Any]) -> DisplayCellViewModel {
-    return DisplayCellViewModel(responceDict: responceDict)
-  }
-  
-}
-
-///  This view-model help to display row of tableview
-struct DisplayCellViewModel {
-  
-  var arrayAboutCanda: [RowModel]
-  init(responceDict: [String: Any]) {
-    arrayAboutCanda = [RowModel]()
-    
-    if let rowsObj = responceDict["rows"] {
-      for obj in rowsObj as! [[String: AnyObject]] {
-        self.arrayAboutCanda.append(RowModel(dictionary: obj))
-      }
-    }
-    
-  }
 }
